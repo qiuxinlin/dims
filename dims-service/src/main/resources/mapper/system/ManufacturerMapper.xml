@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.system.mapper.ManufacturerMapper">
+
+    <resultMap type="Manufacturer" id="Result">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+        <result property="postCode" column="post_code"/>
+        <result property="phone" column="phone"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select id,
+               name,
+               address,
+               post_code,
+               phone,
+               create_by,
+               create_time
+        from biz_manufacturer
+    </sql>
+
+    <select id="findByParam" parameterType="Manufacturer" resultMap="Result">
+        <include refid="selectVo"/>
+        <where>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findAll" resultMap="Result">
+        <include refid="selectVo"/>
+    </select>
+
+    <select id="findById" parameterType="Integer" resultMap="Result">
+        <include refid="selectVo"/>
+        where id = #{id}
+    </select>
+
+    <update id="update" parameterType="Manufacturer">
+        update biz_manufacturer
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="postCode != null">post_code = #{postCode},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <insert id="create" parameterType="Manufacturer" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_manufacturer(
+        name,
+        address,
+        <if test="postCode != null and postCode != 0">post_code,</if>
+        <if test="phone != null and phone != ''">phone,</if>
+        create_by,
+        create_time
+        )values(
+        <if test="name != null and name != ''">#{name},</if>
+        <if test="address != null and address != ''">#{address},</if>
+        <if test="postCode != null">#{postCode},</if>
+        <if test="phone != null and phone != ''">#{phone},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+
+    <delete id="deleteByIds" parameterType="Integer">
+        delete from biz_manufacturer where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper> 
