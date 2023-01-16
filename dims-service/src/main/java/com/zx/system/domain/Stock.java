@@ -1,4 +1,4 @@
-package com.zx.system.domain.vo;
+package com.zx.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -6,29 +6,17 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * 药品信息
+ * 库存信息
  *
  * @author zhangxi
  */
 @Data
-public class DrugVo {
+public class Stock {
     private Integer id;
 
-    private String name;
+    private Integer drugId;
 
-    private String simpleCode;
-
-    private String specification;
-
-    private Integer stock;
-
-    private String manufacturerName;
-
-    private Date manufactureDate;
-
-    private Date exp;
-
-    private Integer lot;
+    private Integer quantity;
 
     private String createBy;
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.system.mapper.StockRecordMapper">
+
+    <resultMap type="StockRecord" id="Result">
+        <id property="id" column="id"/>
+        <result property="drugId" column="drug_id"/>
+        <result property="stockId" column="stock_id"/>
+        <result property="operationType" column="operation_type"/>
+        <result property="quantity" column="quantity"/>
+        <result property="outbound" column="outbound"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select id,
+               drug_id,
+               stock_id,
+               operation_type,
+               outbound,
+               create_by,
+               create_time
+        from biz_stock
+    </sql>
+
+    <insert id="create" parameterType="StockRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_stock(drug_id,
+                              stock_id,
+                              operation_type,
+                              outbound,
+                              create_by,
+                              create_time)
+        values (#{drugId},
+                #{stockId},
+                #{operationType},
+                #{outbound},
+                #{createBy},
+                sysdate())
+    </insert>
+</mapper> 

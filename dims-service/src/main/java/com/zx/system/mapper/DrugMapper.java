@@ -12,8 +12,6 @@ import java.util.List;
 public interface DrugMapper {
     int create(Drug drug);
 
-    List<Drug> searchAll();
-
     List<Drug> findByParam(Drug drug);
 
     Drug findById(Integer id);

@@ -41,6 +41,12 @@ public class DrugController extends BaseController {
         return getDataTable(drugs);
     }
 
+    @PostMapping("/drugs/all")
+    public AjaxResult findAllByParam(@RequestBody Drug drug) {
+        List<DrugVo> drugs = drugService.findByParam(drug);
+        return success(drugs);
+    }
+
     @GetMapping("/drug/{id}")
     public AjaxResult findById(@PathVariable Integer id) {
         Drug drug = drugService.findById(id);

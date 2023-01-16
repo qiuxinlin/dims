@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.system.mapper.StockMapper">
+
+    <resultMap type="Stock" id="Result">
+        <id property="id" column="id"/>
+        <result property="drugId" column="drug_id"/>
+        <result property="quantity" column="quantity"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select id,
+               drug_id,
+               quantity,
+               create_by,
+               create_time
+        from biz_stock
+    </sql>
+
+    <select id="findByDrugId" parameterType="Integer" resultMap="Result">
+        <include refid="selectVo"/>
+        where biz_stock = #{drugId}
+    </select>
+
+    <select id="findByDrugIds" parameterType="List" resultMap="Result">
+        <include refid="selectVo"/>
+        <where>
+            drug_id in
+            <foreach collection="list" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+
+    <update id="update" parameterType="Stock">
+        update biz_stock
+        <set>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <insert id="create" parameterType="Manufacturer" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_stock(
+        drug_id,
+        quantity,
+        create_by,
+        create_time
+        )values(
+        <if test="drugId != null">#{drugId},</if>
+        <if test="quantity != null">#{quantity},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+</mapper> 
