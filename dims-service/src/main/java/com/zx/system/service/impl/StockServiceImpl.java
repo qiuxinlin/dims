@@ -2,13 +2,21 @@ package com.zx.system.service.impl;
 
 import com.zx.common.core.domain.model.LoginUser;
 import com.zx.common.utils.SecurityUtils;
+import com.zx.system.domain.Drug;
 import com.zx.system.domain.Stock;
 import com.zx.system.domain.StockRecord;
+import com.zx.system.domain.vo.StockRecordVo;
+import com.zx.system.mapper.DrugMapper;
 import com.zx.system.mapper.StockMapper;
 import com.zx.system.mapper.StockRecordMapper;
 import com.zx.system.service.IStockService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * IStockService
@@ -21,7 +29,10 @@ public class StockServiceImpl implements IStockService {
     private StockMapper stockMapper;
     @Autowired
     private StockRecordMapper stockRecordMapper;
+    @Autowired
+    private DrugMapper drugMapper;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Boolean stockIn(StockRecord param) {
         if (param.getQuantity() < 0) {
@@ -53,10 +64,12 @@ public class StockServiceImpl implements IStockService {
         stockRecord.setOperationType(1);
         stockRecord.setQuantity(param.getQuantity());
         stockRecord.setOutbound(param.getOutbound());
+        stockRecord.setCreateBy(loginUser.getUsername());
         stockRecordMapper.create(stockRecord);
         return true;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Boolean stockOut(StockRecord param) {
         if (param.getQuantity() < 0) {
@@ -82,7 +95,28 @@ public class StockServiceImpl implements IStockService {
         stockRecord.setOperationType(1);
         stockRecord.setQuantity(param.getQuantity());
         stockRecord.setOutbound(param.getOutbound());
+        stockRecord.setCreateBy(loginUser.getUsername());
         stockRecordMapper.create(stockRecord);
         return true;
+    }
+
+    @Override
+    public List<StockRecordVo> findRecordsByParam(StockRecord stockRecord) {
+        List<StockRecord> stockRecords = stockRecordMapper.findByParam(stockRecord);
+        List<StockRecordVo> stockRecordVos = new ArrayList<>();
+        for (StockRecord temp : stockRecords) {
+            StockRecordVo stockRecordVo = new StockRecordVo();
+            BeanUtils.copyProperties(temp, stockRecordVo);
+            Drug drug = drugMapper.findById(temp.getDrugId());
+            stockRecordVo.setDrugName(drug.getName());
+            if (temp.getOperationType() == 1) {
+                stockRecordVo.setOperationName("入库");
+            }
+            if (temp.getOperationType() == 2) {
+                stockRecordVo.setOperationName("入库");
+            }
+            stockRecordVos.add(stockRecordVo);
+        }
+        return stockRecordVos;
     }
 }

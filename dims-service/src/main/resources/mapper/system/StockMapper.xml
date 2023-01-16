@@ -25,7 +25,7 @@
 
     <select id="findByDrugId" parameterType="Integer" resultMap="Result">
         <include refid="selectVo"/>
-        where biz_stock = #{drugId}
+        where drug_id = #{drugId}
     </select>
 
     <select id="findByDrugIds" parameterType="List" resultMap="Result">

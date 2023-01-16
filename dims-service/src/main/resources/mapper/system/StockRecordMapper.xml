@@ -20,24 +20,36 @@
                drug_id,
                stock_id,
                operation_type,
+               quantity,
                outbound,
                create_by,
                create_time
-        from biz_stock
+        from biz_stock_record
     </sql>
 
     <insert id="create" parameterType="StockRecord" useGeneratedKeys="true" keyProperty="id">
-        insert into biz_stock(drug_id,
-                              stock_id,
-                              operation_type,
-                              outbound,
-                              create_by,
-                              create_time)
+        insert into biz_stock_record(drug_id,
+                                     stock_id,
+                                     operation_type,
+                                     quantity,
+                                     outbound,
+                                     create_by,
+                                     create_time)
         values (#{drugId},
                 #{stockId},
                 #{operationType},
+                #{quantity},
                 #{outbound},
                 #{createBy},
                 sysdate())
     </insert>
+
+    <select id="findByParam" parameterType="StockRecord" resultMap="Result">
+        <include refid="selectVo"/>
+        <where>
+            <if test="drugId != null ">
+                AND drug_id = #{drugId}
+            </if>
+        </where>
+    </select>
 </mapper> 
