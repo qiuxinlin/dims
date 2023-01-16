@@ -13,6 +13,7 @@ import com.zx.system.service.IDrugService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,6 +48,9 @@ public class DrugServiceImpl implements IDrugService {
     public List<DrugVo> findByParam(Drug drug) {
         List<DrugVo> drugVos = new ArrayList<>();
         List<Drug> drugs = drugMapper.findByParam(drug);
+        if (CollectionUtils.isEmpty(drugs)) {
+            return drugVos;
+        }
         List<Integer> drugIds = drugs.stream().map(Drug::getId).collect(Collectors.toList());
         List<Stock> stocks = stockMapper.findByDrugIds(drugIds);
         Map<Integer, Stock> stockMap = stocks.stream().collect(Collectors.toMap(Stock::getDrugId, Stock -> Stock));

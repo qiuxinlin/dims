@@ -92,7 +92,7 @@ public class StockServiceImpl implements IStockService {
         StockRecord stockRecord = new StockRecord();
         stockRecord.setStockId(stock.getId());
         stockRecord.setDrugId(param.getDrugId());
-        stockRecord.setOperationType(1);
+        stockRecord.setOperationType(2);
         stockRecord.setQuantity(param.getQuantity());
         stockRecord.setOutbound(param.getOutbound());
         stockRecord.setCreateBy(loginUser.getUsername());
@@ -113,7 +113,7 @@ public class StockServiceImpl implements IStockService {
                 stockRecordVo.setOperationName("入库");
             }
             if (temp.getOperationType() == 2) {
-                stockRecordVo.setOperationName("入库");
+                stockRecordVo.setOperationName("出库");
             }
             stockRecordVos.add(stockRecordVo);
         }
