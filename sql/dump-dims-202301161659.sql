@@ -376,7 +376,7 @@ CREATE TABLE `sys_notice` (
 
 LOCK TABLES `sys_notice` WRITE;
 /*!40000 ALTER TABLE `sys_notice` DISABLE KEYS */;
-INSERT INTO `sys_notice` VALUES (1,'温馨提醒：2018-07-01 若依新版本发布啦','2',_binary '新版本内容','0','admin','2023-01-05 15:28:52','',NULL,'管理员'),(2,'维护通知：2018-07-01 若依系统凌晨维护','1',_binary '维护内容','0','admin','2023-01-05 15:28:52','',NULL,'管理员');
+INSERT INTO `sys_notice` VALUES (1,'test','2',_binary 'test','0','admin','2023-01-05 15:28:52','',NULL,'管理员'),(2,'test','1',_binary '维护内容','0','admin','2023-01-05 15:28:52','',NULL,'管理员');
 /*!40000 ALTER TABLE `sys_notice` ENABLE KEYS */;
 UNLOCK TABLES;
 
