@@ -1,16 +1,17 @@
 package com.zx.framework.web.service;
 
-import java.util.Set;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import com.zx.common.core.domain.entity.SysRole;
 import com.zx.common.core.domain.model.LoginUser;
 import com.zx.common.utils.SecurityUtils;
 import com.zx.common.utils.StringUtils;
 import com.zx.framework.security.context.PermissionContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Set;
 
 /**
- * RuoYi首创 自定义权限实现，ss取自SpringSecurity首字母
+ * 自定义权限实现，ss取自SpringSecurity首字母
  * 
  * @author zhangxi
  */
