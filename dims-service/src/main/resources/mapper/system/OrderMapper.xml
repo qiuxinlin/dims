@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.system.mapper.OrderMapper">
+
+    <resultMap type="Order" id="Result">
+        <id property="id" column="id"/>
+        <result property="visitNo" column="visit_no"/>
+        <result property="drugId" column="drug_id"/>
+        <result property="quantity" column="quantity"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select id,
+               visit_no,
+               drug_id,
+               quantity,
+               create_by,
+               create_time
+        from biz_order
+    </sql>
+
+    <update id="update" parameterType="Order">
+        update biz_order
+        <set>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <insert id="create" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_order(visit_no,
+                              drug_id,
+                              quantity,
+                              create_by,
+                              create_time)
+        values (#{visitNo},
+                #{drugId},
+                #{quantity},
+                #{createBy},
+                sysdate())
+    </insert>
+</mapper> 
