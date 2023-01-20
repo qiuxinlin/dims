@@ -47,4 +47,13 @@
                 #{createBy},
                 sysdate())
     </insert>
+
+    <select id="findByParam" parameterType="Order" resultMap="Result">
+        <include refid="selectVo"/>
+        <where>
+            <if test="visitNo != null and visitNo != ''">
+                AND visit_no = #{visitNo}
+            </if>
+        </where>
+    </select>
 </mapper> 
