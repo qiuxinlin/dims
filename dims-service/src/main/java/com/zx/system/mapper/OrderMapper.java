@@ -14,4 +14,8 @@ public interface OrderMapper {
     int create(Order order);
 
     List<Order> findByParam(Order order);
+
+    List<Order> findByIds(List<Integer> orderIds);
+
+    int update(Order order);
 }

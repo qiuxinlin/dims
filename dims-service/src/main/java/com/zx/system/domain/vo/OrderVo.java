@@ -22,6 +22,8 @@ public class OrderVo {
 
     private Integer quantity;
 
+    private Integer status;
+
     private String createBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

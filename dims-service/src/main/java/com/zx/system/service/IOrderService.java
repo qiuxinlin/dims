@@ -15,4 +15,8 @@ public interface IOrderService {
     Boolean create(Order order);
 
     List<OrderVo> findByParam(Order order);
+
+    Boolean sendOut(List<Integer> orderIds);
+
+    Boolean sendBack(List<Integer> orderIds);
 }

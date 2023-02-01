@@ -115,6 +115,12 @@ public class StockServiceImpl implements IStockService {
             if (temp.getOperationType() == 2) {
                 stockRecordVo.setOperationName("出库");
             }
+            if (temp.getOperationType() == 3) {
+                stockRecordVo.setOperationName("发药");
+            }
+            if (temp.getOperationType() == 4) {
+                stockRecordVo.setOperationName("退药");
+            }
             stockRecordVos.add(stockRecordVo);
         }
         return stockRecordVos;
